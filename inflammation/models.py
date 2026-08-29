@@ -52,9 +52,9 @@ def patient_normalize(data):
     if np.any(data < 0):
         raise ValueError('Inflammation values should not be negative')
 
-    max = np.max(data, axis = 1)
+    patient_max = np.max(data, axis = 1)
     with np.errstate(invalid = 'ignore', divide = 'ignore'):
-        normalized = data / max[:, np.newaxis]
+        normalized = data / patient_max[:, np.newaxis]
     normalized[np.isnan(normalized)] = 0
     normalized[normalized < 0] = 0
     return normalized
