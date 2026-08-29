@@ -74,6 +74,24 @@ def test_daily_max_mixed():
 
     npt.assert_array_equal(daily_max(test_input), test_result)
 
+
+@pytest.mark.parametrize(
+    "test, expected",
+    [
+        ([[1,3],[2,11],[3,5]],[3,11]), # normal input
+        ([[1,3],[1,3],[1,3]],[1,3]), # single value for all cases
+        ([[-12,-3],[-21,-3],[-1,-3]],[-1,-3]), # only negative values
+        ([[1,30],[10,-999],[-1,3]],[10,30]), # values above and below zero
+        ([[0,0],[0,0],[0,0]],[0,0]) # only zero
+    ]
+)
+
+
+def test_daily_max_parameterized(test, expected):
+    """Additional tests of daily_max() using parameterization"""
+    npt.assert_array_equal(daily_max(np.array(test)), np.array(expected))
+
+
 def test_daily_min_same():
     """Test that min function works when only passed a single repeated integer"""
 
