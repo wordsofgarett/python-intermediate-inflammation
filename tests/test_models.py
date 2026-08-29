@@ -34,10 +34,10 @@ def test_daily_mean_integers():
 @pytest.mark.parametrize(
     "test, expected",
     [
-        ([[1,3],[2,13],[3,5]],[2,7]),         # normal input
+        ([[1,3],[2,13],[3,5]],[2,7]),           # normal input
         ([[1,3],[1,3],[1,3]],[1,3]),            # single value for all cases
-        ([[-12,-3],[-2,-3],[-1,-3]],[-5,-3]),  # only negative values
-        ([[1,30],[9,-31],[-1,1]],[3,0]),    # values above and below zero
+        ([[-12,-3],[-2,-3],[-1,-3]],[-5,-3]),   # only negative values
+        ([[1,30],[9,-31],[-1,1]],[3,0]),        # values above and below zero
         ([[0,0],[0,0],[0,0]],[0,0])             # only zero
     ]
 )
