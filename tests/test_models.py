@@ -141,3 +141,20 @@ def test_daily_min_string():
 
     with pytest.raises(TypeError):
         error_expected = daily_min([['Hello', 'there'], ['General', 'Kenobi']])
+
+
+@pytest.mark.parametrize(
+    "test, expected",
+    [
+        ([[1,3],[2,11],[3,5]],[1,3]), # normal input
+        ([[1,3],[1,3],[1,3]],[1,3]), # single value for all cases
+        ([[-12,-3],[-21,-3],[-1,-3]],[-21,-3]), # only negative values
+        ([[1,30],[10,-999],[-1,3]],[-1,-999]), # values above and below zero
+        ([[0,0],[0,0],[0,0]],[0,0]) # only zero
+    ]
+)
+
+
+def test_daily_min_parameterized(test, expected):
+    """Additional tests of daily_min() using parameterization"""
+    npt.assert_array_equal(daily_min(np.array(test)), np.array(expected))
