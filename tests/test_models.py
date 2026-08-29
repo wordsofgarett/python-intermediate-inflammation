@@ -31,6 +31,23 @@ def test_daily_mean_integers():
     npt.assert_array_equal(daily_mean(test_input), test_result)
 
 
+@pytest.mark.parametrize(
+    "test, expected",
+    [
+        ([[1,3],[2,13],[3,5]],[2,7]),         # normal input
+        ([[1,3],[1,3],[1,3]],[1,3]),            # single value for all cases
+        ([[-12,-3],[-2,-3],[-1,-3]],[-5,-3]),  # only negative values
+        ([[1,30],[9,-31],[-1,1]],[3,0]),    # values above and below zero
+        ([[0,0],[0,0],[0,0]],[0,0])             # only zero
+    ]
+)
+
+
+def test_daily_mean_parameterized(test, expected):
+    """Additional tests of daily_mean() using parameterization"""
+    npt.assert_array_equal(daily_mean(np.array(test)), np.array(expected))
+
+
 def test_daily_max_same():
     """Test that max function works when only passed a single repeated integer"""
 
@@ -78,11 +95,11 @@ def test_daily_max_mixed():
 @pytest.mark.parametrize(
     "test, expected",
     [
-        ([[1,3],[2,11],[3,5]],[3,11]), # normal input
-        ([[1,3],[1,3],[1,3]],[1,3]), # single value for all cases
-        ([[-12,-3],[-21,-3],[-1,-3]],[-1,-3]), # only negative values
-        ([[1,30],[10,-999],[-1,3]],[10,30]), # values above and below zero
-        ([[0,0],[0,0],[0,0]],[0,0]) # only zero
+        ([[1,3],[2,11],[3,5]],[3,11]),          # normal input
+        ([[1,3],[1,3],[1,3]],[1,3]),            # single value for all cases
+        ([[-12,-3],[-21,-3],[-1,-3]],[-1,-3]),  # only negative values
+        ([[1,30],[10,-999],[-1,3]],[10,30]),    # values above and below zero
+        ([[0,0],[0,0],[0,0]],[0,0])             # only zero
     ]
 )
 
@@ -146,11 +163,11 @@ def test_daily_min_string():
 @pytest.mark.parametrize(
     "test, expected",
     [
-        ([[1,3],[2,11],[3,5]],[1,3]), # normal input
-        ([[1,3],[1,3],[1,3]],[1,3]), # single value for all cases
+        ([[1,3],[2,11],[3,5]],[1,3]),           # normal input
+        ([[1,3],[1,3],[1,3]],[1,3]),            # single value for all cases
         ([[-12,-3],[-21,-3],[-1,-3]],[-21,-3]), # only negative values
-        ([[1,30],[10,-999],[-1,3]],[-1,-999]), # values above and below zero
-        ([[0,0],[0,0],[0,0]],[0,0]) # only zero
+        ([[1,30],[10,-999],[-1,3]],[-1,-999]),  # values above and below zero
+        ([[0,0],[0,0],[0,0]],[0,0])             # only zero
     ]
 )
 
