@@ -2,8 +2,9 @@
 
 import numpy as np
 import numpy.testing as npt
+import pytest
 
-from inflammation.models import daily_mean
+from inflammation.models import daily_mean, daily_max, daily_min
 
 def test_daily_mean_zeros():
     """Test that mean function works for an array of zeros."""
@@ -29,3 +30,96 @@ def test_daily_mean_integers():
     # Need to use Numpy testing functions to compare arrays
     npt.assert_array_equal(daily_mean(test_input), test_result)
 
+
+def test_daily_max_same():
+    """Test that max function works when only passed a single repeated integer"""
+
+    test_input = np.array([[1,3],
+                          [1,3],
+                          [1,3]])
+    test_result = np.array([1,3])
+
+    npt.assert_array_equal(daily_max(test_input), test_result)
+
+
+def test_daily_max_varied():
+    """Test that max function works when passed a variety of integers"""
+
+    test_input = np.array([[1, 3],
+                           [2, 11],
+                           [3, 5]])
+    test_result = np.array([3, 11])
+
+    npt.assert_array_equal(daily_max(test_input), test_result)
+
+
+def test_daily_max_negative():
+    """Test that max function works when only passed negative integers"""
+
+    test_input = np.array([[-12, -3],
+                           [-21, -3],
+                           [-1, -3]])
+    test_result = np.array([-1, -3])
+
+    npt.assert_array_equal(daily_max(test_input), test_result)
+
+
+def test_daily_max_mixed():
+    """Test that max function works when passed positive and negative integers"""
+
+    test_input = np.array([[1, 30],
+                           [10, -999],
+                           [-1, 3]])
+    test_result = np.array([10, 30])
+
+    npt.assert_array_equal(daily_max(test_input), test_result)
+
+def test_daily_min_same():
+    """Test that min function works when only passed a single repeated integer"""
+
+    test_input = np.array([[1,3],
+                          [1,3],
+                          [1,3]])
+    test_result = np.array([1,3])
+
+    npt.assert_array_equal(daily_min(test_input), test_result)
+
+
+def test_daily_min_varied():
+    """Test that min function works when passed a variety of integers"""
+
+    test_input = np.array([[1, 3],
+                           [2, 11],
+                           [3, 5]])
+    test_result = np.array([1, 3])
+
+    npt.assert_array_equal(daily_min(test_input), test_result)
+
+
+def test_daily_min_negative():
+    """Test that min function works when only passed negative integers"""
+
+    test_input = np.array([[-12, -3],
+                           [-21, -3],
+                           [-1, -3]])
+    test_result = np.array([-21, -3])
+
+    npt.assert_array_equal(daily_min(test_input), test_result)
+
+
+def test_daily_min_mixed():
+    """Test that min function works when passed positive and negative integers"""
+
+    test_input = np.array([[1, 30],
+                           [10, -999],
+                           [-1, 3]])
+    test_result = np.array([-1, -999])
+
+    npt.assert_array_equal(daily_min(test_input), test_result)
+
+
+def test_daily_min_string():
+    """Test for TypeError when passing strings"""
+
+    with pytest.raises(TypeError):
+        error_expected = daily_min([['Hello', 'there'], ['General', 'Kenobi']])
