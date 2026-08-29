@@ -40,3 +40,29 @@ def daily_min(data):
     :param data: data from which to compute the mean
     """
     return np.min(data, axis = 0)
+
+
+def patient_normalize(data):
+    """Normalize patient data from a 2D inflammation data array.
+    NaN values are ignored and normalized to 0.
+    Negative values throw an input error.
+
+    :param data: a numpy array of patient data
+    """
+    if np.any(data < 0):
+        raise ValueError('Inflammation values should not be negative')
+
+    max = np.max(data, axis = 1)
+    with np.errstate(invalid = 'ignore', divide = 'ignore'):
+        normalized = data / max[:, np.newaxis]
+    normalized[np.isnan(normalized)] = 0
+    normalized[normalized < 0] = 0
+    return normalized
+
+
+def patient_normalise(data):
+    """Wrapper in case anyone tries to run the British spelling.
+
+    :param data: a numpy array of patient data
+    """
+    return patient_normalize(data)
