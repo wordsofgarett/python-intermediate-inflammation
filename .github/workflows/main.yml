@@ -1,0 +1,25 @@
+name: CI
+
+# Which Github event will trigger the CI build
+on: push
+
+# Jobs
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v6
+        with: python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements.txt
+
+      - name: Test with Pytest
+        run: |
+          python3 -m pytest--cov=inflammation.models test/test_models.py
